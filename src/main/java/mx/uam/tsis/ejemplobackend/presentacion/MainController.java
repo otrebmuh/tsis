@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.extern.slf4j.Slf4j;
+import mx.uam.tsis.ejemplobackend.servicios.AlumnoController;
 
 /**
  * Controlador web
@@ -16,7 +17,7 @@ import lombok.extern.slf4j.Slf4j;
 @Controller
 @Slf4j
 public class MainController {
-	
+	private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AlumnoController.class);
 	@GetMapping("/")
 	public String index() {
 		
