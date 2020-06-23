@@ -71,7 +71,6 @@
         	var mat = $("#matricula").val();
         	if(mat === ""){
         		$.get("http://localhost:8080/alumnos", function(data){
-        			alert("Que pedo?");
         			$("#resultado").append($("<ol>"));
         			for(var i = 0; i<data.length;i++){
         				$("#resultado").append($("<li>" +
@@ -88,7 +87,6 @@
    		 	}
         	else{
         		$.get("http://localhost:8080/alumnos/"+mat, function(data){
-        			alert(typeof(data));
         			$("#resultado").append($("<ol>"));
         				$("#resultado").append($("<li>" +
         						"Matricula: " +data.matricula + "<br> " +
@@ -108,18 +106,32 @@
         
         
         $("#post").click(function(){
+        	var parametros = JSON.stringify({
+        			matricula: $("#matricula").val(),
+                	nombre: $("#name").val(),
+                	carrera: $("#carrera").val()        			
+        	});
         	
-        	var mat = $("#matricula").val();
-        	var nombre = $("#nombre").val();
-        	var carrera = $("#carrera").val();
-        	alert(typeof(mat))
+
+        	/*var data = JSON.parse('{"matricula":'+ $("#matricula").val() +', "nombre": "'+ $("#name").val()+'",	"carrera":"'+ carrera+'" }');
+        	alert(typeof(data.matricula));*/
         	
-        	var data = JSON.parse('{"matricula:"'+ mat+', "nombre":'+ nombre+',	"carrera":'+ carrera+' }');
-        	alert(typeof(data));
-        	$.post("http://localhost:8080/alumnos",txtJSON,
+        	/*$.post("http://localhost:8080/alumnos",data,
         		    function(data,status){
         		      alert("Data: " + data + "\nStatus: " + status);
+        	});*/
+        	$.ajax({
+        	    url: "http://localhost:8080/alumnos",
+        	    type: 'POST',
+        	    dataType: 'json',
+        	    contentType: "application/json; charset=utf-8",
+        	    data: parametros,
+        	    success: function(data,status) {
+        	    	alert("Data: " + data + "\nStatus: " + status);
+        	    }
         	});
+        	
+        	
         	
         	
         });
