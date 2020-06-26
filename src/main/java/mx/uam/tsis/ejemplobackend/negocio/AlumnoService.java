@@ -1,6 +1,7 @@
 package mx.uam.tsis.ejemplobackend.negocio;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -8,6 +9,13 @@ import org.springframework.stereotype.Service;
 import mx.uam.tsis.ejemplobackend.datos.AlumnoRepository;
 import mx.uam.tsis.ejemplobackend.negocio.modelo.Alumno;
 
+/**
+ * 
+ * Clase que contiene la lógica de negocio del manejo de alumnos
+ * 
+ * @author humbertocervantes
+ *
+ */
 @Service
 public class AlumnoService {
 
@@ -16,15 +24,17 @@ public class AlumnoService {
 	
 	/**
 	 * 
-	 * @param nuevoAlumno
+	 * Método que permite crear nuevos alumnos
+	 * 
+	 * @param nuevoAlumno el alumno que se desea crear en el sistema
 	 * @return el alumno que se acaba de crear si la creacion es exitosa, null de lo contrario
 	 */
 	public Alumno create(Alumno nuevoAlumno) {
 		
 		// Regla de negocio: No se puede crear más de un alumno con la misma matricula
-		Alumno alumno = alumnoRepository.findByMatricula(nuevoAlumno.getMatricula());
+		Optional <Alumno> alumnoOpt = alumnoRepository.findById(nuevoAlumno.getMatricula());
 		
-		if(alumno == null) {
+		if(!alumnoOpt.isPresent()) {
 			
 			return alumnoRepository.save(nuevoAlumno);
 			
@@ -36,11 +46,8 @@ public class AlumnoService {
 		
 	}
 	
-	/**
-	 * 
-	 * @return
-	 */
-	public List <Alumno> retrieveAll () {
-		return alumnoRepository.find();
+
+	public Iterable <Alumno> retrieveAll () {
+		return alumnoRepository.findAll();
 	}
 }
