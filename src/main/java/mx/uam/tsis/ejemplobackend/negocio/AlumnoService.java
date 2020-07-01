@@ -50,4 +50,10 @@ public class AlumnoService {
 	public Iterable <Alumno> retrieveAll () {
 		return alumnoRepository.findAll();
 	}
+	
+	public Alumno findByMatricula(Integer matricula) {
+		Optional <Alumno> alumnoOpt = alumnoRepository.findById(matricula);
+		
+		return alumnoOpt.get();
+	}
 }
