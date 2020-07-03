@@ -9,6 +9,7 @@ import io.swagger.annotations.ApiModelProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 /**
@@ -23,6 +24,7 @@ import lombok.NoArgsConstructor;
 @Builder
 @Data
 @Entity // Indica que hay que persistir en BD
+@EqualsAndHashCode
 public class Alumno {
 	
 	@NotNull

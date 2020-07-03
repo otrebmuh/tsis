@@ -32,8 +32,8 @@ public class Grupo {
 	private String clave;
 	
 	@OneToMany(targetEntity = Alumno.class, fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
-	@JoinColumn(name = "id")	
-	private List <Alumno> alumnos;
+	@JoinColumn(name = "id") // No crea tabla intermedia	
+	private List <Alumno> alumnos = new ArrayList <> ();
 	
 	public boolean addAlumno(Alumno alumno) {
 		return alumnos.add(alumno);

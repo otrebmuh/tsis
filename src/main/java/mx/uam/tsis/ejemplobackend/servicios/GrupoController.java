@@ -61,31 +61,12 @@ public class GrupoController {
 	}
 	
 	
-	/**
-	 * 
-	 * POST /grupos/{id}/alumnos/{1234}
-	 * 
-	 * @return
-	 *
-	@PostMapping(path = "/grupos/{id}/alumnos/{matricula}", produces = MediaType.APPLICATION_JSON_VALUE)
-	public ResponseEntity <?> addStudentToGroup(
-			@PathVariable("id") Integer id,
-			@PathVariable("matricula") Integer matricula) {
-		
-		boolean result = grupoService.addStudentToGroup(id, matricula);
-		
-		if(result) {
-			return ResponseEntity.status(HttpStatus.OK).build(); 
-		} else {
-			return ResponseEntity.status(HttpStatus.NOT_FOUND).build(); 
-		}
-		
-	
-	}*/
 
 	/**
 	 * 
 	 * POST /grupos/{id}/alumnos?matricula=1234
+	 * 
+	 * PROBAR ESTE!!!
 	 * 
 	 * @return
 	 */
