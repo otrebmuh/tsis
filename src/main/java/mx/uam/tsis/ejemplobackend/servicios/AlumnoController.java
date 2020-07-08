@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -70,11 +71,22 @@ public class AlumnoController {
 	
 		
 	}
-	/*
-	public update() {
+	
+	@PutMapping(path = "/alumnos/{matricula}", consumes = MediaType.APPLICATION_JSON_VALUE)
+	public ResponseEntity <?> update(@PathVariable("matricula") Integer matricula, @RequestBody @Valid Alumno nuevoAlumno) {
+		
+		Boolean result = alumnoService.update(nuevoAlumno);
+		
+		if(result) {
+			return ResponseEntity.status(HttpStatus.OK).body(nuevoAlumno);			
+		} else {
+			return ResponseEntity.status(HttpStatus.NOT_FOUND).body(result);
+		}
+
 		
 	}
 	
+	/*
 	public delete() {
 		
 	}*/

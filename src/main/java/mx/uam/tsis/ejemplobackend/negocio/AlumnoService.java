@@ -39,13 +39,7 @@ public class AlumnoService {
 		
 		if(!alumnoOpt.isPresent()) {
 
-			log.info("Voy a guardar a alumno "+nuevoAlumno);
-			
-			Alumno returnAlumno =  alumnoRepository.save(nuevoAlumno);
-			
-			log.info("Voy a regresar a alumno "+returnAlumno);
-			
-			return returnAlumno;
+			return  alumnoRepository.save(nuevoAlumno);
 			
 		} else {
 			
@@ -71,5 +65,35 @@ public class AlumnoService {
 		Optional <Alumno> alumnoOpt = alumnoRepository.findById(matricula);
 		
 		return alumnoOpt.get();
+	}
+	
+	/**
+	 * 
+	 * Actualiza al alumno
+	 * 
+	 * @param actualizado
+	 * @return true si la actualización fue exitosa
+	 */
+	public boolean update(Alumno actualizado) {
+		// Primero veo que si esté en la BD
+		Optional <Alumno> alumnoOpt = alumnoRepository.findById(actualizado.getMatricula());
+		
+		
+		if(alumnoOpt.isPresent()) {
+			Alumno alumno = alumnoOpt.get(); // Este es el que está en la bd
+			
+			alumno.setCarrera(actualizado.getCarrera());
+			alumno.setNombre(actualizado.getNombre());
+			
+			log.info("Persistiendo los cambios "+alumno.getCarrera());
+			
+			alumnoRepository.save(alumno); // Persisto los cambios
+			
+			return true;
+		} else {
+			return false;
+		}
+
+
 	}
 }

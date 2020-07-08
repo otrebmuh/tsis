@@ -77,7 +77,44 @@ public class AlumnoControllerIntegrationTest {
 	}
 
 	@Test
-	public void testCreate400() {
+	public void testUpdate200() {
+		
+		Alumno alumno = new Alumno();
+		alumno.setMatricula(12345678);
+		alumno.setCarrera("Computación");
+		alumno.setNombre("Pruebin");
+		
+		alumnoRepository.save(alumno); // Guardo el alumno original en la BD
+
+		Alumno alumnoActualizado = new Alumno();
+		alumnoActualizado.setMatricula(12345678);
+		alumnoActualizado.setCarrera("Electrónica");
+		alumnoActualizado.setNombre("PruebinActualizado");
+		
+		
+		// Creo el encabezado
+		HttpHeaders headers = new HttpHeaders();
+		headers.set("content-type",MediaType.APPLICATION_JSON.toString());
+		headers.set("Authorization","Basic");
+		
+		// Creo la petición con el alumno como body y el encabezado
+		HttpEntity <Alumno> request = new HttpEntity <> (alumnoActualizado, headers);
+		
+		ResponseEntity <Alumno> responseEntity = restTemplate.exchange("/v1/alumnos/12345678", HttpMethod.PUT, request, Alumno.class);
+
+		// Corroboro que el endpoint me regresa el estatus esperado
+		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());
+
+		// Recupero de la BD el alumno
+		Optional <Alumno> optAlumno = alumnoRepository.findById(12345678);
+		
+		Alumno actualizado = optAlumno.get();
+		
+		// Aquí corroboro que el alumno que está en la BD ya quedó actualizado
+		assertEquals(alumnoActualizado, actualizado);
+		
+		// Debemos borrar al alumno, si no se queda en la BD
+		alumnoRepository.delete(actualizado);
 		
 	}
 	
