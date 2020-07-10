@@ -76,7 +76,13 @@
 	      <artifactId>h2</artifactId>
 	      <scope>runtime</scope>
 	    </dependency>
-				
+	    
+	    <!-- Basic Security -->
+		<dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-security</artifactId>
+    	</dependency>
+						
 		<!-- Prueba unitaria -->
 		
 		<dependency>

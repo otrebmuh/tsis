@@ -14,6 +14,7 @@ import lombok.extern.slf4j.Slf4j;
 import mx.uam.tsis.ejemplobackend.datos.AlumnoRepository;
 import mx.uam.tsis.ejemplobackend.negocio.modelo.Alumno;
 
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -46,6 +47,12 @@ public class AlumnoControllerIntegrationTest {
 		
 	}
 	
+	@AfterEach
+	public void cleanUp() {
+		
+		// Me aseguro de limpiar los cambios en la BD después de cada prueba
+		alumnoRepository.deleteAll();
+	}
 	
 	@Test
 	public void testCreate201() {
@@ -59,6 +66,7 @@ public class AlumnoControllerIntegrationTest {
 		// Creo el encabezado
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("content-type",MediaType.APPLICATION_JSON.toString());
+		headers.set("Authorization","Basic dHNpczoxMjM0");
 		
 		// Creo la petición con el alumno como body y el encabezado
 		HttpEntity <Alumno> request = new HttpEntity <> (alumno, headers);
@@ -95,7 +103,7 @@ public class AlumnoControllerIntegrationTest {
 		// Creo el encabezado
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("content-type",MediaType.APPLICATION_JSON.toString());
-		headers.set("Authorization","Basic");
+		headers.set("Authorization","Basic dHNpczoxMjM0");
 		
 		// Creo la petición con el alumno como body y el encabezado
 		HttpEntity <Alumno> request = new HttpEntity <> (alumnoActualizado, headers);
@@ -114,7 +122,7 @@ public class AlumnoControllerIntegrationTest {
 		assertEquals(alumnoActualizado, actualizado);
 		
 		// Debemos borrar al alumno, si no se queda en la BD
-		alumnoRepository.delete(actualizado);
+		//alumnoRepository.delete(actualizado);
 		
 	}
 	
