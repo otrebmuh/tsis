@@ -15,7 +15,7 @@
 	<description>Ejemplo de desarrollo de backend con Spring</description>
 
 	<properties>
-		<java.version>1.8</java.version>
+		<java.version>11</java.version>
 	</properties>
 
 	<dependencies>
@@ -77,11 +77,11 @@
 	      <scope>runtime</scope>
 	    </dependency>
 	    
-	    <!-- Basic Security -->
+	    <!-- Basic Security 
 		<dependency>
 	        <groupId>org.springframework.boot</groupId>
 	        <artifactId>spring-boot-starter-security</artifactId>
-    	</dependency>
+    	</dependency> -->
 						
 		<!-- Prueba unitaria -->
 		

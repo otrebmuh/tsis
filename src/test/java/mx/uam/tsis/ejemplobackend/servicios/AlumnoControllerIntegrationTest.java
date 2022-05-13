@@ -34,7 +34,7 @@ import java.util.Optional;
 public class AlumnoControllerIntegrationTest {
 	
 	@Autowired
-	private TestRestTemplate restTemplate;
+	private TestRestTemplate testRestTemplate;
 	
 	@Autowired
 	private AlumnoRepository alumnoRepository;
@@ -55,32 +55,40 @@ public class AlumnoControllerIntegrationTest {
 	}
 	
 	@Test
-	public void testCreate201() {
+	public void testPost() {
 		
-		// Creo el alumno que voy a enviar
-		Alumno alumno = new Alumno();
-		alumno.setCarrera("Computación");
-		alumno.setMatricula(12345678);
-		alumno.setNombre("Pruebin");
+		// Creo el alumno que voy a enviar (dto)
+		Alumno alumnoDto = new Alumno();
+		alumnoDto.setCarrera("Computación");
+		alumnoDto.setMatricula(12345678);
+		alumnoDto.setNombre("Pruebin");
 
 		// Creo el encabezado
 		HttpHeaders headers = new HttpHeaders();
 		headers.set("content-type",MediaType.APPLICATION_JSON.toString());
 		headers.set("Authorization","Basic dHNpczoxMjM0");
 		
+		// Caso de prueba exitoso
 		// Creo la petición con el alumno como body y el encabezado
-		HttpEntity <Alumno> request = new HttpEntity <> (alumno, headers);
+		HttpEntity <Alumno> request = new HttpEntity <> (alumnoDto, headers);
 		
-		ResponseEntity <Alumno> responseEntity = restTemplate.exchange("/v1/alumnos", HttpMethod.POST, request, Alumno.class);
+		ResponseEntity <Alumno> responseEntity = 
+				testRestTemplate.exchange("/v1/alumnos", HttpMethod.POST, request, Alumno.class);
 
 		log.info("Me regresó:"+responseEntity.getBody());
 		
 		// Corroboro que el endpoint me regresa el estatus esperado
 		assertEquals(HttpStatus.CREATED, responseEntity.getStatusCode());
 		
+		assertEquals(alumnoDto.getMatricula(),responseEntity.getBody().getMatricula());
+		
+		
 		// Corroboro que en la base de datos se guardó el alumno
-		Optional <Alumno> optAlumno = alumnoRepository.findById(12345678);
-		assertEquals(alumno,optAlumno.get());
+		Optional <Alumno> optAlumno = alumnoRepository.findById(alumnoDto.getMatricula());
+		assertEquals(alumnoDto,optAlumno.get());
+		
+		
+
 		
 	}
 
@@ -108,7 +116,7 @@ public class AlumnoControllerIntegrationTest {
 		// Creo la petición con el alumno como body y el encabezado
 		HttpEntity <Alumno> request = new HttpEntity <> (alumnoActualizado, headers);
 		
-		ResponseEntity <Alumno> responseEntity = restTemplate.exchange("/v1/alumnos/12345678", HttpMethod.PUT, request, Alumno.class);
+		ResponseEntity <Alumno> responseEntity = testRestTemplate.exchange("/v1/alumnos/12345678", HttpMethod.PUT, request, Alumno.class);
 
 		// Corroboro que el endpoint me regresa el estatus esperado
 		assertEquals(HttpStatus.OK, responseEntity.getStatusCode());

@@ -48,7 +48,7 @@ public class AlumnoController {
 		if(alumno != null) {
 			return ResponseEntity.status(HttpStatus.CREATED).body(alumno);			
 		} else {
-			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("no se puede crear alumno");
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
 		}
 	
 
@@ -67,7 +67,7 @@ public class AlumnoController {
 	public ResponseEntity <?> retrieve(@PathVariable("matricula") Integer matricula) {
 		log.info("Buscando al alumno con matricula "+matricula);
 		
-		return ResponseEntity.status(HttpStatus.OK).build(); //.body(alumno);
+		return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build(); //.body(alumno);
 	
 		
 	}
