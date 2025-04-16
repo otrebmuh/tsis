@@ -1,8 +1,9 @@
 package mx.uam.tsis.ejemplobackend.servicios;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
-
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,8 +16,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import mx.uam.tsis.ejemplobackend.negocio.AlumnoService;
 import mx.uam.tsis.ejemplobackend.negocio.modelo.Alumno;
 
@@ -26,17 +27,19 @@ import mx.uam.tsis.ejemplobackend.negocio.modelo.Alumno;
  * @author humbertocervantes
  *
  */
+@Tag(name = "Alumno", description = "API para gestionar alumnos")
 @RestController
 @RequestMapping("/v1") // Versionamiento
-@Slf4j 
 public class AlumnoController {
 	
+	private static final Logger log = LoggerFactory.getLogger(AlumnoController.class);
+
 	@Autowired
 	private AlumnoService alumnoService;
 	
-	@ApiOperation(
-			value = "Crear alumno",
-			notes = "Permite crear un nuevo alumno, la matrícula debe ser única"
+	@Operation(
+			summary = "Crear alumno",
+			description = "Permite crear un nuevo alumno, la matrícula debe ser única"
 			) // Documentacion del api
 	@PostMapping(path = "/alumnos", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity <?> create(@RequestBody @Valid Alumno nuevoAlumno) { // Validaciones
@@ -54,6 +57,7 @@ public class AlumnoController {
 
 	}
 	
+	@Operation(summary = "Obtener todos los alumnos")
 	@GetMapping(path = "/alumnos", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity <?> retrieveAll() {
 		
@@ -63,6 +67,7 @@ public class AlumnoController {
 		
 	}
 
+	@Operation(summary = "Obtener un alumno por matrícula")
 	@GetMapping(path = "/alumnos/{matricula}", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity <?> retrieve(@PathVariable("matricula") Integer matricula) {
 		log.info("Buscando al alumno con matricula "+matricula);
@@ -72,6 +77,7 @@ public class AlumnoController {
 		
 	}
 	
+	@Operation(summary = "Actualizar un alumno")
 	@PutMapping(path = "/alumnos/{matricula}", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity <?> update(@PathVariable("matricula") Integer matricula, @RequestBody @Valid Alumno nuevoAlumno) {
 		

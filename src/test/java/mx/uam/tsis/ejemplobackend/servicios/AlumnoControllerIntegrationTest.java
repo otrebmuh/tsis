@@ -10,7 +10,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import mx.uam.tsis.ejemplobackend.datos.AlumnoRepository;
 import mx.uam.tsis.ejemplobackend.negocio.modelo.Alumno;
 
@@ -29,10 +30,11 @@ import java.util.Optional;
  * @author humbertocervantes
  *
  */
-@Slf4j
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class AlumnoControllerIntegrationTest {
 	
+	private static final Logger log = LoggerFactory.getLogger(AlumnoControllerIntegrationTest.class);
+
 	@Autowired
 	private TestRestTemplate testRestTemplate;
 	

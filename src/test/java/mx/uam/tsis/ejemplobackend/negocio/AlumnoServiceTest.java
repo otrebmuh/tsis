@@ -13,7 +13,8 @@ import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.stubbing.Answer;
 
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import static org.mockito.Mockito.when;
 
@@ -22,10 +23,11 @@ import mx.uam.tsis.ejemplobackend.negocio.modelo.Alumno;
 
 import java.util.Optional;
 
-@Slf4j
 @ExtendWith(MockitoExtension.class) // Uso de Mockito
 public class AlumnoServiceTest {
 	
+	private static final Logger log = LoggerFactory.getLogger(AlumnoServiceTest.class);
+
 	@Mock
 	private AlumnoRepository alumnoRepositoryMock; // Mock generado por Mockito
 	

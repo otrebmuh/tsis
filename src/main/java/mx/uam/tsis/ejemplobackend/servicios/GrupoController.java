@@ -4,8 +4,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.validation.Valid;
+import jakarta.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -15,25 +17,26 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
-import lombok.extern.slf4j.Slf4j;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import mx.uam.tsis.ejemplobackend.negocio.GrupoService;
 import mx.uam.tsis.ejemplobackend.negocio.modelo.Grupo;
 
+@Tag(name = "Grupo", description = "API para gestionar grupos")
 @RestController
 @RequestMapping("/v1") // Versionamiento
-@Slf4j 
 public class GrupoController {
 	
-	
+	private static final Logger log = LoggerFactory.getLogger(GrupoController.class);
+
 	@Autowired
 	private GrupoService grupoService;
 	
 	
-	@ApiOperation(
-			value = "Crear grupo",
-			notes = "Permite crear un nuevo grupo"
+	@Operation(
+			summary = "Crear grupo",
+			description = "Permite crear un nuevo grupo"
 			) // Documentacion del api
 	@PostMapping(path = "/grupos", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity <?> create(@RequestBody @Valid Grupo nuevoGrupo) { // Validaciones
@@ -51,6 +54,7 @@ public class GrupoController {
 
 	}
 	
+	@Operation(summary = "Obtener todos los grupos")
 	@GetMapping(path = "/grupos", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity <?> retrieveAll() {
 		
@@ -70,10 +74,11 @@ public class GrupoController {
 	 * 
 	 * @return
 	 */
+	@Operation(summary = "Agregar alumno a grupo")
 	@PostMapping(path = "/grupos/{id}/alumnos", produces = MediaType.APPLICATION_JSON_VALUE)
 	public ResponseEntity <?> addStudentToGroup(
-			@PathVariable("id") Integer id,
-			@RequestParam("matricula") Integer matricula) {
+			@Parameter(description = "ID del grupo") @PathVariable("id") Integer id,
+			@Parameter(description = "Matrícula del alumno") @RequestParam("matricula") Integer matricula) {
 		
 		boolean result = grupoService.addStudentToGroup(id, matricula);
 		

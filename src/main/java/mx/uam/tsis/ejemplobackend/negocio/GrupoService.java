@@ -2,18 +2,20 @@ package mx.uam.tsis.ejemplobackend.negocio;
 
 import java.util.Optional;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import lombok.extern.slf4j.Slf4j;
 import mx.uam.tsis.ejemplobackend.datos.GrupoRepository;
 import mx.uam.tsis.ejemplobackend.negocio.modelo.Alumno;
 import mx.uam.tsis.ejemplobackend.negocio.modelo.Grupo;
 
 @Service
-@Slf4j
 public class GrupoService {
 	
+	private static final Logger log = LoggerFactory.getLogger(GrupoService.class);
+
 	@Autowired
 	private GrupoRepository grupoRepository;
 	
